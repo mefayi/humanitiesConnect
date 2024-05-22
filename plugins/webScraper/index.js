@@ -1,6 +1,6 @@
 module.exports = {
-  name: "Web Scraper",
+  name: "digis Berlin Importer",
   description:
-    "Scrapes data from a specified website and adds it to the JSON database.",
+    "Fetches data from a provided URL and adds it to the JSON database.",
   start: "plugin.html",
 };

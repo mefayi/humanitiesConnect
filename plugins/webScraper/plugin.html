@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Web Scraper</title>
+    <title>HTTP Link Importer</title>
+    <link rel="stylesheet" type="text/css" href="plugin.css" />
   </head>
   <body>
-    <h1>Web Scraper</h1>
-    <label for="url">Website URL:</label>
-    <input type="text" id="url" placeholder="https://example.com" />
-    <button id="scrapeButton">Scrape Website</button>
+    <div class="container">
+      <h1>HTTP Link Importer</h1>
+      <div class="form-group">
+        <label for="urlInput">Enter URL:</label>
+        <input type="text" id="urlInput" placeholder="https://example.com" />
+      </div>
+      <button id="fetchButton">Fetch and Import</button>
+    </div>
     <script src="plugin.js"></script>
   </body>
 </html>
