@@ -48,23 +48,23 @@ function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
         <div className="form-group">
           <div className="form">
             <label>Name</label>
-            <input
-              type="text"
+            <textarea
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
               className="p-2.5 rounded-md "
+              rows="2"
               autoFocus
             />
           </div>
           <div className="form">
             <label>Bezeichnung</label>
-            <input
-              type="text"
+            <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Bezeichnung"
               className="p-2.5 rounded-md"
+              rows="5"
             />
           </div>
           <div className="form">

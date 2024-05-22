@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --yellow-bg: #ffc900;
   --turqious-bg: #00a0aa;
   --grey-bg: #555;
@@ -61,7 +61,7 @@ h1 span {
 #link-td {
   width: 22%;
 }
-.text-dark-blue{
+.text-dark-blue {
   color: var(--darkBlue-bg);
 }
 
@@ -165,22 +165,28 @@ button:hover {
 
 .form label {
   display: inline-block;
-  width: 30%;
-  margin: 10px;
+  width: 20%;
+  margin: 20px;
   font-weight: bold;
 }
 
-.form input {
-  width: 50%;
+.form input,
+.form textarea {
+  width: 70%;
   border: 1px solid #e4e4e4;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border-radius: 5px;
 }
 
 .btn-control {
   text-align: center;
-  margin: auto ;
+  margin: auto;
 }
-.btn-control button{
+.btn-control button {
   margin-top: 20px;
 }
 
@@ -216,12 +222,12 @@ button:hover {
   margin: auto;
 }
 
-.form-control button{
+.form-control button {
   margin-top: 20px;
 }
 
 .edit-btn,
-.delete-btn{
+.delete-btn {
   border: none;
   box-shadow: none;
 }
@@ -232,7 +238,6 @@ button:hover {
 .add-btn:hover {
   box-shadow: none;
 }
-
 
 .add-btn,
 .plugin-btn {
