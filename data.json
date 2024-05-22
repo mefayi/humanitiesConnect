@@ -1,79 +1,100 @@
 [
   {
-    "id": 1000,
-    "name": "deutsches institut",
-    "description": "test beschreibung",
-    "link": "http://institut.com",
+    "id": 1,
+    "name": "Die Zwillinge und Tante Ly: Ein Digitalisierungsprojekt zur Familiengeschichte Alice Salomons ",
+    "description": "Alice Salomons Familienleben ist bis heute weitestgehend unerforscht. Ein 2021 im Alice Salomon Archiv eingetroffener Nachlass naher Verwandter gibt erstmals Auskunft über die private Seite der bedeutenden Berliner Sozialreformerin, Frauenbewegungsprotagonistin und Sozialarbeitspionierin und ihrer Angehörigen. Der Bestand umfasst ca. 3.500 Blatt sowie ca. 50 Fotos und Dias. Das vorliegende Projekt vermittelt dieses unbekannte Kapitel des Berliner Kulturerbe, indem es den Nachlass erstmals digital für Stadtgesellschaft, Forschung und die breite Öffentlichkeit zugänglich macht.",
+    "link": "https://www.ash-berlin.eu/",
     "isOnline": true
   },
   {
-    "id": 1001,
-    "name": "test",
-    "description": "test",
-    "link": "http://www.test.de",
+    "id": 2,
+    "name": "Digitalisierung des fotografischen Nachlasses von Marta Astfalck-Vietz ",
+    "description": "Der fotografische Nachlass von Marta Astfalck-Vietz (1901-1994) gehört in der Berlinischen Galerie zu den wichtigsten Konvoluten. Vor allem die eigenwilligen künstlerischen Inszenierungen, bei denen Astfalck-Vietz neben der Rolle der Fotografin auch die des Models, der Arrangeurin und Regisseurin einnimmt, bilden eine neue Facette künstlerischer Fotografie ab. Ziel des Digitalisierungsvorhabens ist es, ca. 660 Originalabzüge (jeweils Vorder- \u0002und bei 380 Abzügen auch die Rückseite) und eine Auswahl von ca. 65 Pflanzenaquarellen über die Webseite Sammlung Online der Berlinischen Galerie  der breiten Öffentlichkeit und der wissenschaftlichen Forschung verfügbar zu machen.",
+    "link": "https://berlinischegalerie.de/",
     "isOnline": true
   },
   {
-    "id": 1002,
-    "name": "test",
-    "description": "test",
-    "link": "http://mefayi.de",
+    "id": 3,
+    "name": "Nachkriegszeit im Dialog. Digitalisierung von Skulpturen Bernhard Heiligers in Berlin mit historischen Fotobeständen ",
+    "description": "Mit dem Aufbau einer Online-Präsentation aus Skulpturen von Bernhard Heiliger samt Werkdaten wird in Kombination mit historischen Fotografien aus Heiligers Umfeld ein einzigartiges Zeugnis der Nachkriegszeit und der ersten Jahrzehnte der Bundesrepublik Deutschland bis hin zur Wiedervereinigung erstmals öffentlich zugänglich gemacht. Anhand der Digitalisate und ihrer Vernetzung über die Metadaten lässt sich aus unterschiedlichen Perspektiven zeigen, wie verwoben Heiligers Kunst mit diesem Teil der deutschen Geschichte ist, und wie sein Oeuvre den Geist dieser Epoche erfahrbar macht.",
+    "link": "https://berlinischegalerie.de/",
     "isOnline": true
   },
   {
-    "id": 1003,
-    "name": "testen",
-    "description": "einfacher test der csv",
-    "link": "http://test.com",
-    "isOnline": false
-  },
-  {
-    "id": 1004,
-    "name": "memeto",
-    "description": "eine webseite die dein leben",
-    "link": "http://none.dc",
-    "isOnline": false
-  },
-  {
-    "id": 1005,
-    "name": "testen",
-    "description": "einfacher test der csv",
-    "link": "http://test.com",
-    "isOnline": false
-  },
-  {
-    "id": 1006,
-    "name": "testen",
-    "description": "einfacher test der csv",
-    "link": "http://test.com",
-    "isOnline": false
-  },
-  {
-    "id": 1007,
-    "name": "memeto",
-    "description": "eine webseite die dein leben",
-    "link": "http://none.de",
+    "id": 4,
+    "name": "Tiefere Erschließung, Digitalisierung und öffentliche Zugänglichmachung sowie Vermittlung des audiovisuellen Archivs des Berliner Künstlerprogramms des DAAD ",
+    "description": "Ziel des Projektes ist die Digitalisierung der audiovisuellen Bestände des Berliner Künstlerprogramms mit Fokus auf den Zeitraum 1993–2003, die Zugänglichmachung ausgewählter dokumentarischer Ton- und Bildträger, die Gewährleistung der langfristigen Nachnutzbarkeit der Digitalisate sowie die Einbettung in kunstgeschichtliche und zeithistorische Kontexte. Zudem soll die Aktivierung des digitalen Archivs durch Vermittlungsformate für Social Media, durch digitale Veranstaltungen, durch Präsentationsformen in der DAAD-Galerie und die Optimierung der Verfügbarkeit der digitalisierten Archivalien auf der Webseite des Berliner Künstlerprogramms umgesetzt werden.",
+    "link": "https://www.berliner-kuenstlerprogramm.de/de/",
     "isOnline": true
   },
   {
-    "id": 1008,
-    "name": "testen",
-    "description": "einfacher test der csv",
-    "link": "http://test.com",
-    "isOnline": false
+    "id": 5,
+    "name": "Die Brücke Berlin ",
+    "description": "Ziel des Projektes ist die Entwicklung einer (interaktiven) Webpräsenz, die Kunst und Leben der Brücke-Künstler im urbanen Kontext von Berlin informativ, intuitiv und spielerisch darstellt. Kunstwerke, Fotografien und Archivalien werden mit Kontexten und Kartenmaterial (Georeferenzierung) verknüpft. Ein weiteres Ziel ist es, eine digitale Präsentation zu erstellen, die es ermöglicht, Berlin neu zu entdecken und Leben und Werk der Brücke-Künstler in Berlin auf innovative Art und Weise zu erleben.",
+    "link": "https://www.bruecke-museum.de/de/",
+    "isOnline": true
   },
   {
-    "id": 1009,
-    "name": "memeto",
-    "description": "eine webseite die dein leben",
-    "link": "http://none.dc",
-    "isOnline": false
+    "id": 6,
+    "name": "Digitale, kommentierte Veröffentlichung des Romanmanuskripts „Sand und Sterne“ von Siddy Wronsky sowie begleitender zeitgeschichtlicher Dokumente ",
+    "description": "Projektziel ist die Digitalisierung und dauerhafte Zugänglichkeit der drei Sprachfassungen (Deutsch, Englisch, Hebräisch) des Romanmanuskripts „Sand und Sterne“ von Siddy Wronsky für die Bürger:innen Berlins und weitere Interessierten, u.a. durch Präsentation in der Deutschen Digitalen Bibliothek. Ebenso geht es in diesem deutsch-israelischen Kooperationsprojekt um die Erschließung der historischen Bedeutung des biografisch geprägten Exil-Romans für die Geschichte der Sozialen Arbeit, des in Berlin ansässigen DZI sowie für das Schicksal der unter der Nazi-Diktatur ins Exil getriebenen jüdischen Mitbürger:innen aus Berlin.",
+    "link": "https://www.dzi.de/",
+    "isOnline": true
   },
   {
-    "id": 1010,
-    "name": "test",
-    "description": "test",
-    "link": "test",
-    "isOnline": false
+    "id": 7,
+    "name": "Digitalisierung von künstlerischen Inszenierungsfotos von Helga Paris und Roger Melis als erster Schritt in ein (digitales) Inszenierungsarchiv der Hochschule für Schauspielkunst Ernst Busch ",
+    "description": "Projektziel ist die Digitalisierung von insgesamt 200 Fotografien der Berliner Fotograf:innen Helga Paris und Roger Melis aus dem Inszenierungsarchiv der HfS Ernst Busch sowie die Entwicklung eines Workflow-Modells zu Erfassung, Archivierung, Inventarisierung, Digitalisierung, Rechteklärung, Online-Bereitstellung und öffentlichen Vermittlung.",
+    "link": "https://www.hfs-berlin.de/",
+    "isOnline": true
+  },
+  {
+    "id": 8,
+    "name": "düppel 3D – Weiterführende Digitalisierung von Kulturgut mit Schwerpunkt auf der Digitalisierung der Innenräume des Museumsdorfs Düppel sowie der Digitalisierung von zusätzlichen Artefakten und Gegenständen zur Wissensvermittlung mit Virtual Reality und Game Technology in Form einer interaktiven 3D-Experience",
+    "description": "In diesem Projekt geht es um die weiterführende Digitalisierung von Kulturgut mit Schwerpunkt auf der Digitalisierung der Innenräume des Museumsdorfs Düppel sowie der Digitalisierung von zusätzlichen Artefakten und Gegenständen zur Wissensvermittlung mit Virtual Reality und Game Technology in Form einer interaktiven 3D-Experience.",
+    "link": "https://www.htw-berlin.de/",
+    "isOnline": true
+  },
+  {
+    "id": 9,
+    "name": "Schnittstelle Architektur – Baugebundene Kunst in Berlin ",
+    "description": "Bildhauerei in Berlin ist eine umfangreiche, für viele Nutzer:innengruppen hilfreiche Dokumentation der Kunst im öffentlichen Raum. Bislang wenig Berücksichtigung in der seit April 2019 online stehenden Datenbank fanden Objekte, die an der unmittelbaren Grenze zwischen Bildhauerkunst und Architektur stehen. Thema dieses Projektes für 2022/2023 sind daher herausragende baugebundene Gestaltungen. Gemeint sind Friese, Balustradenfiguren, vollplastische Bildwerke auf Treppenwangen, Wappenkartuschen, Giebelreliefs oder krönende Kuppelfiguren, die maßgeblich zum Berliner Stadtbild gehören, in unmittelbarer gestalterischer und ikonografischer Verbindungen zu Bauwerken stehen und somit ein wichtiges Bindeglied zwischen Architektur und öffentlichem Raum darstellen. Mit dem Projekt „Schnittstelle Architektur“ sollen nicht nur neue, gut recherchierte und bebilderte Datensätze in BiB ergänzt werden, es wird ein eigener Bereich erschlossen und eine beispielhafte Dokumentation für diese häufig von der Forschung vernachlässigte Kunstgattung entwickelt.",
+    "link": "https://www.htw-berlin.de/",
+    "isOnline": true
+  },
+  {
+    "id": 10,
+    "name": "Hebräischer Buchdruck in Berlin (1700–1900) ",
+    "description": "Der hebräische Buchdruck in Berlin dokumentiert die Kontinuitäten und Umbrüche der jüdischen Tradition bis in die Moderne. Die 65 für das Digitalisierungsprojekt ausgewählten Bände aus dem 18. und 19. Jahrhundert können zur Vervollständigung der weltweit verfügbaren Digitalisate beitragen und die an der hebräischen Buchkultur in Berlin beteiligten Drucker, Verlage und Herausgeber sichtbar machen.",
+    "link": "https://www.jmberlin.de/",
+    "isOnline": true
+  },
+  {
+    "id": 11,
+    "name": "Frauen und Technik – die Mustersammlung Technische Fotografie der Photographischen Lehranstalt im Lette Verein ",
+    "description": "In den Nachlässen der Lehrerinnen Renate Borowka und Ilse Körner befinden sich Muster aus dem fachfotografischen und fotografischen Unterricht, in den Bereichen Hämatologie, Histologie und Zellbiologie sowie der Metallographie aus der Zeit zwischen 1908 und 1980. Ziel des Projektes ist die Digitalisierung, Restaurierung und Erschließung von Beständen zur Ausbildungsgeschichte der Technischen Fotografie im Lette Verein sowie die Zugänglichmachung der Digitalisate über die Datenbank des Archivs im Lette Verein und DDB/Europeana für Fachöffentlichkeit und interessierte Öffentlichkeit.  ",
+    "link": "http://www.letteverein.berlin/",
+    "isOnline": true
+  },
+  {
+    "id": 12,
+    "name": "Petra Gall und die Berliner Frauen- und Lesbenbewegung ",
+    "description": "Ziel des Projekts ist die Kuratierung, konservatorische Behandlung, Erfassung, Digitalisierung und Veröffentlichung von ca. 2.000 Objekten (Kleinbildfilme: negativ und positiv; Kontaktabzüge, fbg. und s/w, unterschiedlichen Formaten) aus dem Teilbestand „Frauen- und Lesbenfotografie“ des Nachlasses der Berliner Fotografin Petra Gall.",
+    "link": "https://www.schwulesmuseum.de/",
+    "isOnline": true
+  },
+  {
+    "id": 13,
+    "name": "Berliner Eisen – Berlin als Standort für Industrie, Handwerk und Kreativwirtschaft ",
+    "description": "Im Mittelpunkt des Projektes steht die Sammlung Eisenkunstguss des Stadtmuseum Berlin. „Berlin iron“ oder „Fer de Berlin“ steht für eine Epoche der beginnenden Industrialisierung Berlins, es repräsentiert ein bedeutendes Kapitel der Technikgeschichte, Berliner Innovationen und einer beeindruckenden Kreativwirtschaft. Im Projekt soll diese Sammlung in ihrer Gänze sowohl in der Datenbank dokumentiert und durchgängig mit hochqualitativen Objektfotos versehen werden, als auch komplett auf Sammlung Online und der DDB veröffentlicht werden. Ergänzend zum Gesamtbestand werden rund 200 Grafiken digitalisiert, die den historischen Kontext zum Thema Berliner Eisenindustrie bieten. Mit der vollständigen Erfassung und Digitalisierung der – im Kontext des Stadtmuseums – relativ kleinen Sammlung, können wir eine gesamte Sammlung zeitgemäß digitalisiert und erfasst der Öffentlichkeit „anbieten“.",
+    "link": "http://www.stadtmuseum.de/",
+    "isOnline": true
+  },
+  {
+    "id": 14,
+    "name": "Die Ausbildung der Modedesigner:innen an der Kunsthochschule Weißensee und deren Einfluss auf den Stil des Modeinstitutes der DDR der späten 1970er/1980er Jahre ",
+    "description": "Innerhalb des Kooperationsprojekts „Berlin zeichnet Mode“, an dem das Stadtmuseum als Partner beteiligt ist, wurde erfolgreich begonnen, einen kleinen Teil der in Berlin an unterschiedlichen Institutionen verstreuten Modezeichnungen für die Öffentlichkeit zugänglich zu machen. Bei dem diesjährigen Projekt geht es um die geistige Weiterführung des Projekts zur Berliner Modezeichnung. Hierzu soll die Ostberliner Tradition ins Zentrum gerückt werden, da sie nicht nur essenzieller Bestandteil der Berliner Modegeschichte ist, sondern auch, weil sie bisher eine relative Unterrepräsentation in der Öffentlichkeit erfährt.",
+    "link": "http://www.stadtmuseum.de/",
+    "isOnline": true
   }
 ]

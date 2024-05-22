@@ -85,7 +85,7 @@ function MainContent({
                     }`}
                   />
                 </td>
-                <td className="py-2 flex">
+                <td className="px-2 py-2 text-center">
                   <button onClick={() => onEdit(project)} className="edit-btn">
                     <FontAwesomeIcon icon={faEdit} className="text-blue-500" />
                   </button>
