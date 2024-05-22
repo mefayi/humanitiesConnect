@@ -22,7 +22,7 @@ Um das Projekt zu installieren, führen Sie die folgenden Schritte aus:
 
 1. Klonen Sie das Repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mefayi/humanitiesConnect.git
    ```
 
 2. Navigieren Sie in das Projektverzeichnis:
