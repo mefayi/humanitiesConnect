@@ -15,7 +15,7 @@ async function isProjectOnline(link) {
 }
 
 // Initialize data and update project status
-async function initDataAndUpdateProjects() {
+async function initData() {
   try {
     await fs.access(dataPath);
   } catch (error) {
@@ -38,27 +38,9 @@ async function initDataAndUpdateProjects() {
     );
     return;
   }
-
-  try {
-    const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
-
-    // Parallele Überprüfung der Projektlinks
-    const updatePromises = data.map(async (project) => {
-      project.isOnline = await isProjectOnline(project.link);
-      return project;
-    });
-
-    // Warten Sie, bis alle Überprüfungen abgeschlossen sind
-    const updatedData = await Promise.all(updatePromises);
-
-    await fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
-    console.log("Projects successfully loaded and updated.");
-  } catch (error) {
-    console.error("Error loading and updating projects:", error);
-  }
 }
 
 module.exports = {
-  initDataAndUpdateProjects,
+  initData,
   isProjectOnline,
 };

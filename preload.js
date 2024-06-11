@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld("api", {
   onRefreshData: (callback) => ipcRenderer.on("refresh-data", callback),
   offRefreshData: (callback) =>
     ipcRenderer.removeListener("refresh-data", callback),
+  refreshData: () => ipcRenderer.invoke("refresh-data"),
 });
 
 console.log("API exposed to renderer process");

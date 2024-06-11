@@ -191,6 +191,7 @@ button:hover {
 }
 
 #add-btn,
+#refresh-btn,
 #plugin-btn,
 #cancel-btn {
   border: 1px solid #eeeeee;
@@ -198,6 +199,7 @@ button:hover {
 }
 
 #add-btn:hover,
+#refresh-btn:hover,
 #plugin-btn:hover,
 #cancel-btn:hover {
   background-color: #d8d8d8;
@@ -235,11 +237,13 @@ button:hover {
 .edit-btn:hover,
 .delete-btn:hover,
 .plugin-btn:hover,
+.refresh-btn:hover,
 .add-btn:hover {
   box-shadow: none;
 }
 
 .add-btn,
+.refresh-btn,
 .plugin-btn {
   margin: 0px;
   margin-top: 20px;

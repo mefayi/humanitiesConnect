@@ -2,7 +2,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs").promises;
 const {
-  initDataAndUpdateProjects,
+  initData,
   isProjectOnline,
 } = require("./dataInitializer");
 
@@ -65,7 +65,7 @@ function createWindow() {
 
 app
   .whenReady()
-  .then(initDataAndUpdateProjects)
+  .then(initData)
   .then(loadPlugins)
   .then(createWindow)
   .catch((error) =>
@@ -224,5 +224,23 @@ ipcMain.handle("get-plugins", async () => {
 ipcMain.on("notify-main", () => {
   if (mainWindow) {
     mainWindow.webContents.send("refresh-data");
+  }
+});
+
+ipcMain.handle("refresh-data", async () => {
+  try {
+    const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
+
+    const updatePromises = data.map(async (project) => {
+      project.isOnline = await isProjectOnline(project.link);
+      return project;
+    });
+
+    const updatedData = await Promise.all(updatePromises);
+
+    await fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
+    console.log("Projects successfully loaded and updated.");
+  } catch (error) {
+    console.error("Error loading and updating projects:", error);
   }
 });

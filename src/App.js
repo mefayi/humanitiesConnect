@@ -84,6 +84,15 @@ function App() {
     window.api.openPlugin(pluginDir);
   }
 
+  async function handleRefresh() {
+    try {
+      await window.api.refreshData();
+      fetchProjects();
+    } catch (error) {
+      console.error("Error refreshing projects:", error);
+    }
+  }
+
   return (
     <div>
       <MainContent
@@ -99,6 +108,7 @@ function App() {
         projects={projects}
         plugins={plugins}
         onOpenPlugin={handleOpenPlugin}
+        onRefresh={handleRefresh}
       />
       <AddProjectModal
         isOpen={isAddModalOpen}

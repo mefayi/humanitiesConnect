@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -12,6 +12,7 @@ import {
   faCircleInfo,
   faHashtag,
   faFileSignature,
+  faArrowsRotate,
 } from "@fortawesome/free-solid-svg-icons";
 import PluginButton from "./PluginButton";
 
@@ -22,7 +23,16 @@ function MainContent({
   projects,
   plugins,
   onOpenPlugin,
+  onRefresh
 }) {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await onRefresh();
+    setIsRefreshing(false);
+  };
+
   return (
     <div className="main-content">
       <h1 className="text-3xl font-bold text-center mb-6 select-none">
@@ -107,6 +117,13 @@ function MainContent({
           className="add-btn block mx-auto mt-8 bg-blue-500 text-white py-2 px-4 rounded-full focus:outline-none hover:bg-blue-600"
         >
           <FontAwesomeIcon icon={faCirclePlus} />
+        </button>
+        <button
+          onClick={handleRefresh}
+          className={`refresh-btn block bg-green-500 text-white py-2 px-4 rounded-full focus:outline-none hover:bg-green-600 ${isRefreshing ? 'cursor-not-allowed opacity-50' : ''}`}
+          disabled={isRefreshing}
+        >
+          <FontAwesomeIcon icon={faArrowsRotate} spin={isRefreshing} />
         </button>
         {plugins.map((plugin) => (
           <PluginButton
