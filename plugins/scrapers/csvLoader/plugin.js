@@ -1,6 +1,3 @@
-// Initial log to confirm the script has loaded
-console.log("plugin.js loaded");
-
 // DOM elements
 const fileInput = document.getElementById("csvFile");
 const importButton = document.getElementById("importButton");

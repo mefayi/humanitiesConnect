@@ -8,7 +8,6 @@ async function initData() {
   try {
     await fs.access(dataPath);
   } catch (error) {
-    console.log("data.json does not exist, creating...");
     await fs.writeFile(
       dataPath,
       JSON.stringify(

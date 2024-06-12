@@ -1,6 +1,3 @@
-console.log("plugin.js loaded");
-console.log(window.api);
-
 document.getElementById("fetchButton").addEventListener("click", async () => {
   const urlInput = document.getElementById("urlInput");
   const fetchButton = document.getElementById("fetchButton");
@@ -57,8 +54,6 @@ document.getElementById("fetchButton").addEventListener("click", async () => {
           projects.push(projectData);
         }
       });
-
-      console.log("Extracted projects:", projects);
 
       if (projects.length > 0) {
         const result = await window.api.pluginAddData(projects);

@@ -237,7 +237,6 @@ ipcMain.handle("refresh-data", async () => {
     const updatedData = await Promise.all(updatePromises);
 
     await fs.writeFile(dataPath, JSON.stringify(updatedData, null, 2));
-    console.log("Projects successfully loaded and updated.");
   } catch (error) {
     console.error("Error loading and updating projects:", error);
   }

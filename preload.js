@@ -1,7 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-console.log("preload.js loaded");
-
 contextBridge.exposeInMainWorld("api", {
   getData: () => ipcRenderer.invoke("get-data"),
   saveData: (data) => ipcRenderer.invoke("save-data", data),
@@ -17,5 +15,3 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.removeListener("refresh-data", callback),
   refreshData: () => ipcRenderer.invoke("refresh-data"),
 });
-
-console.log("API exposed to renderer process");

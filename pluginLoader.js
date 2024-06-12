@@ -24,7 +24,6 @@ async function loadPlugins() {
     }
 
     global.scrapers = scrapers;
-    console.log("Scraper plugins successfully loaded.");
 
     const checkerFiles = await fs.readdir(checkersPath);
     const checkers = {};
@@ -43,7 +42,6 @@ async function loadPlugins() {
     }
 
     global.checkers = checkers;
-    console.log("Checker plugins successfully loaded.");
 
     return { scrapers, checkers };
   } catch (error) {
