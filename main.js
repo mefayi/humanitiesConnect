@@ -2,63 +2,13 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs").promises;
 const { initData } = require("./dataInitializer");
+const { loadPlugins } = require("./pluginLoader");
+const { openPlugin, getCurrentPluginDir } = require("./pluginHandler");
 
 const dataPath = path.join(__dirname, "data.json");
-const pluginsPath = path.join(__dirname, "plugins");
-const scrapersPath = path.join(pluginsPath, "scrapers");
-const checkersPath = path.join(pluginsPath, "checkers");
 
 let mainWindow;
 const devTools = false;
-let currentPluginWindow = null;
-let currentPluginDir = null;
-
-async function loadPlugins() {
-  try {
-    const scraperDirs = await fs.readdir(scrapersPath);
-    const scrapers = [];
-
-    for (const dir of scraperDirs) {
-      const pluginIndexPath = path.join(scrapersPath, dir, "index.js");
-      if (
-        await fs
-          .access(pluginIndexPath)
-          .then(() => true)
-          .catch(() => false)
-      ) {
-        const pluginConfig = require(pluginIndexPath);
-        scrapers.push({ ...pluginConfig, dir });
-      }
-    }
-
-    global.scrapers = scrapers;
-    console.log("Scraper plugins successfully loaded.");
-
-    const checkerFiles = await fs.readdir(checkersPath);
-    const checkers = {};
-
-    for (const file of checkerFiles) {
-      const pluginIndexPath = path.join(checkersPath, file);
-      if (
-        await fs
-          .access(pluginIndexPath)
-          .then(() => true)
-          .catch(() => false)
-      ) {
-        const pluginConfig = require(pluginIndexPath);
-        checkers[pluginConfig.name] = pluginConfig;
-      }
-    }
-
-    global.checkers = checkers;
-    console.log("Checker plugins successfully loaded.");
-
-    return { scrapers, checkers };
-  } catch (error) {
-    console.error("Error loading plugins:", error);
-    return { scrapers: [], checkers: {} };
-  }
-}
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -194,6 +144,7 @@ ipcMain.handle("update-data", async (event, updatedEntry) => {
 // General Plugin Handler
 ipcMain.handle("plugin-add-data", async (event, newEntries) => {
   try {
+    const currentPluginDir = getCurrentPluginDir();
     if (!currentPluginDir) {
       throw new Error("No plugin is currently active.");
     }
@@ -201,29 +152,29 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
     const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
     let maxId = data.length > 0 ? Math.max(...data.map((item) => item.id)) : 0;
 
-    const pluginConfig = global.scrapers.find(
-      (p) => p.dir === currentPluginDir
-    );
-    if (!pluginConfig) {
-      throw new Error(`Plugin ${currentPluginDir} not found`);
-    }
-
-    const checkerName = pluginConfig.checkerName;
-    if (!checkerName) {
-      throw new Error(
-        `Checker name not defined for plugin ${currentPluginDir}`
-      );
-    }
-
-    const checker = global.checkers[checkerName];
-    if (!checker) {
-      throw new Error(`Checker plugin ${checkerName} not found`);
-    }
-
     for (const entry of newEntries) {
       const { name, description, link } = entry;
       if (!name || !description || !link) {
-        continue; // Skip invalid entries
+        continue;
+      }
+
+      const pluginConfig = global.scrapers.find(
+        (p) => p.dir === currentPluginDir
+      );
+      if (!pluginConfig) {
+        continue;
+      }
+
+      const checkerName = pluginConfig.checkerName;
+      if (!checkerName) {
+        throw new Error(
+          `Checker name not defined for plugin ${currentPluginDir}`
+        );
+      }
+
+      const checker = global.checkers[checkerName];
+      if (!checker) {
+        continue;
       }
 
       const newId = ++maxId;
@@ -249,33 +200,7 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
 
 // Open a Plugin Window
 ipcMain.handle("open-plugin", async (event, pluginDir) => {
-  if (currentPluginWindow) {
-    currentPluginWindow.close();
-  }
-
-  const pluginConfig = global.scrapers.find((p) => p.dir === pluginDir);
-  if (!pluginConfig) {
-    throw new Error(`Plugin ${pluginDir} not found`);
-  }
-
-  const pluginPath = path.join(scrapersPath, pluginDir, pluginConfig.start);
-  currentPluginWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
-
-  currentPluginWindow.loadFile(pluginPath);
-  currentPluginDir = pluginDir; // Set the current plugin directory
-
-  currentPluginWindow.on("closed", () => {
-    currentPluginWindow = null;
-    currentPluginDir = null; // Clear the current plugin directory
-  });
+  openPlugin(pluginDir);
 });
 
 // IPC Handler for Plugins
