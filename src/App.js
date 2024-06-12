@@ -11,7 +11,8 @@ function App() {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [plugins, setPlugins] = useState([]);
+  const [scrapers, setScrapers] = useState([]);
+  const [checkers, setCheckers] = useState([]);
 
   useEffect(() => {
     fetchProjects();
@@ -37,7 +38,8 @@ function App() {
   async function fetchPlugins() {
     try {
       const response = await window.api.getPlugins();
-      setPlugins(response);
+      setScrapers(response.scrapers);
+      setCheckers(response.checkers);
     } catch (error) {
       console.error("Error loading plugins:", error);
     }
@@ -106,7 +108,8 @@ function App() {
           setDeleteModalOpen(true);
         }}
         projects={projects}
-        plugins={plugins}
+        scrapers={scrapers}
+        checkers={checkers}
         onOpenPlugin={handleOpenPlugin}
         onRefresh={handleRefresh}
       />
@@ -114,12 +117,14 @@ function App() {
         isOpen={isAddModalOpen}
         onClose={() => setAddModalOpen(false)}
         onSubmit={handleAddProject}
+        checkers={checkers}
       />
       <EditProjectModal
         isOpen={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
         project={selectedProject}
         onSubmit={handleEditProject}
+        checkers={checkers}
       />
       <DeleteProjectModal
         isOpen={isDeleteModalOpen}

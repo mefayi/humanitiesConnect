@@ -4,16 +4,6 @@ const path = require("path");
 
 const dataPath = path.join(__dirname, "data.json");
 
-// Link Checker
-async function isProjectOnline(link) {
-  try {
-    const response = await axios.head(link, { timeout: 5000 });
-    return response.status >= 200 && response.status < 400;
-  } catch (error) {
-    return false;
-  }
-}
-
 // Initialize data and update project status
 async function initData() {
   try {
@@ -42,5 +32,4 @@ async function initData() {
 
 module.exports = {
   initData,
-  isProjectOnline,
 };

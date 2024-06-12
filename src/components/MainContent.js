@@ -21,7 +21,7 @@ function MainContent({
   onEdit,
   onDelete,
   projects,
-  plugins,
+  scrapers,
   onOpenPlugin,
   onRefresh
 }) {
@@ -120,12 +120,14 @@ function MainContent({
         </button>
         <button
           onClick={handleRefresh}
-          className={`refresh-btn block bg-green-500 text-white py-2 px-4 rounded-full focus:outline-none hover:bg-green-600 ${isRefreshing ? 'cursor-not-allowed opacity-50' : ''}`}
+          className={`refresh-btn block bg-green-500 text-white py-2 px-4 rounded-full focus:outline-none hover:bg-green-600 ${
+            isRefreshing ? "cursor-not-allowed opacity-50" : ""
+          }`}
           disabled={isRefreshing}
         >
           <FontAwesomeIcon icon={faArrowsRotate} spin={isRefreshing} />
         </button>
-        {plugins.map((plugin) => (
+        {scrapers.map((plugin) => (
           <PluginButton
             key={plugin.dir}
             plugin={plugin}

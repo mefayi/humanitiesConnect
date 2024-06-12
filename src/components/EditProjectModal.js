@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
+function EditProjectModal({ isOpen, onClose, onSubmit, project, checkers }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [checkerName, setCheckerName] = useState("");
 
   useEffect(() => {
     if (project) {
       setName(project.name);
       setDescription(project.description);
       setLink(project.link);
+      setCheckerName(project.checkerName);
     }
   }, [project]);
 
@@ -17,6 +19,7 @@ function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
     setName("");
     setDescription("");
     setLink("");
+    setCheckerName("");
   };
 
   const handleClose = () => {
@@ -30,6 +33,7 @@ function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
       name: name,
       description: description,
       link: link,
+      checkerName: checkerName,
     };
     await onSubmit(updatedProject);
     resetForm();
@@ -52,7 +56,7 @@ function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Name"
-              className="p-2.5 rounded-md "
+              className="p-2.5 rounded-md"
               rows="2"
               autoFocus
             />
@@ -74,13 +78,38 @@ function EditProjectModal({ isOpen, onClose, project, onSubmit }) {
               value={link}
               onChange={(e) => setLink(e.target.value)}
               placeholder="www.example.com"
-              className="p-2.5 rounded-md "
+              className="p-2.5 rounded-md"
             />
           </div>
-        </div>
-        <div className="btn-control">
-          <button className="bg-white hover:bg-gray-200" onClick={handleSubmit}>Speichern</button>
-          <button className="bg-white hover:bg-gray-200" onClick={handleClose}>Abbrechen</button>
+          <div className="form">
+            <label>Status</label>
+            <select
+              value={checkerName}
+              onChange={(e) => setCheckerName(e.target.value)}
+              className="p-2.5 rounded-md"
+            >
+              <option value="">Select Checker</option>
+              {Object.keys(checkers).map((key) => (
+                <option key={key} value={checkers[key].name}>
+                  {checkers[key].name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="btn-control">
+            <button
+              className="bg-white hover:bg-gray-200"
+              onClick={handleSubmit}
+            >
+              Aktualisieren
+            </button>
+            <button
+              className="bg-white hover:bg-gray-200"
+              onClick={handleClose}
+            >
+              Abbrechen
+            </button>
+          </div>
         </div>
       </div>
     </div>

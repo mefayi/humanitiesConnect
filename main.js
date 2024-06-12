@@ -1,14 +1,17 @@
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs").promises;
-const { initData, isProjectOnline } = require("./dataInitializer");
+const { initData } = require("./dataInitializer");
 
 const dataPath = path.join(__dirname, "data.json");
 const pluginsPath = path.join(__dirname, "plugins");
 const scrapersPath = path.join(pluginsPath, "scrapers");
+const checkersPath = path.join(pluginsPath, "checkers");
 
 let mainWindow;
 const devTools = false;
+let currentPluginWindow = null;
+let currentPluginDir = null;
 
 async function loadPlugins() {
   try {
@@ -30,10 +33,30 @@ async function loadPlugins() {
 
     global.scrapers = scrapers;
     console.log("Scraper plugins successfully loaded.");
-    return scrapers;
+
+    const checkerFiles = await fs.readdir(checkersPath);
+    const checkers = {};
+
+    for (const file of checkerFiles) {
+      const pluginIndexPath = path.join(checkersPath, file);
+      if (
+        await fs
+          .access(pluginIndexPath)
+          .then(() => true)
+          .catch(() => false)
+      ) {
+        const pluginConfig = require(pluginIndexPath);
+        checkers[pluginConfig.name] = pluginConfig;
+      }
+    }
+
+    global.checkers = checkers;
+    console.log("Checker plugins successfully loaded.");
+
+    return { scrapers, checkers };
   } catch (error) {
     console.error("Error loading plugins:", error);
-    return [];
+    return { scrapers: [], checkers: {} };
   }
 }
 
@@ -103,10 +126,14 @@ ipcMain.handle("save-data", async (event, newData) => {
 
 ipcMain.handle("add-data", async (event, newEntry) => {
   try {
-    console.log("add-data received:", newEntry);
-    const { name, description, link } = newEntry;
-    if (!name || !description || !link) {
+    const { name, description, link, checkerName } = newEntry;
+    if (!name || !description || !link || !checkerName) {
       throw new Error("Invalid data provided. All fields are required.");
+    }
+
+    const checker = global.checkers[checkerName];
+    if (!checker) {
+      throw new Error(`Checker plugin ${checkerName} not found`);
     }
 
     const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
@@ -117,7 +144,8 @@ ipcMain.handle("add-data", async (event, newEntry) => {
       name,
       description,
       link,
-      isOnline: await isProjectOnline(link),
+      checkerName,
+      isOnline: await checker.checkOnlineStatus(link),
     };
 
     data.push(newData);
@@ -141,12 +169,19 @@ ipcMain.handle("update-data", async (event, updatedEntry) => {
     if (projectIndex === -1) {
       throw new Error("Project not found");
     }
-    const { name, description, link } = updatedEntry;
+    const { name, description, link, checkerName } = updatedEntry;
     if (name) data[projectIndex].name = name;
     if (description) data[projectIndex].description = description;
     if (link) {
       data[projectIndex].link = link;
-      data[projectIndex].isOnline = await isProjectOnline(link);
+      if (checkerName) {
+        const checker = global.checkers[checkerName];
+        if (!checker) {
+          throw new Error(`Checker plugin ${checkerName} not found`);
+        }
+        data[projectIndex].checkerName = checkerName;
+        data[projectIndex].isOnline = await checker.checkOnlineStatus(link);
+      }
     }
     await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
     return data[projectIndex];
@@ -159,8 +194,31 @@ ipcMain.handle("update-data", async (event, updatedEntry) => {
 // General Plugin Handler
 ipcMain.handle("plugin-add-data", async (event, newEntries) => {
   try {
+    if (!currentPluginDir) {
+      throw new Error("No plugin is currently active.");
+    }
+
     const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
     let maxId = data.length > 0 ? Math.max(...data.map((item) => item.id)) : 0;
+
+    const pluginConfig = global.scrapers.find(
+      (p) => p.dir === currentPluginDir
+    );
+    if (!pluginConfig) {
+      throw new Error(`Plugin ${currentPluginDir} not found`);
+    }
+
+    const checkerName = pluginConfig.checkerName;
+    if (!checkerName) {
+      throw new Error(
+        `Checker name not defined for plugin ${currentPluginDir}`
+      );
+    }
+
+    const checker = global.checkers[checkerName];
+    if (!checker) {
+      throw new Error(`Checker plugin ${checkerName} not found`);
+    }
 
     for (const entry of newEntries) {
       const { name, description, link } = entry;
@@ -174,7 +232,8 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
         name,
         description,
         link,
-        isOnline: await isProjectOnline(link),
+        checkerName,
+        isOnline: await checker.checkOnlineStatus(link),
       };
 
       data.push(newData);
@@ -190,13 +249,17 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
 
 // Open a Plugin Window
 ipcMain.handle("open-plugin", async (event, pluginDir) => {
+  if (currentPluginWindow) {
+    currentPluginWindow.close();
+  }
+
   const pluginConfig = global.scrapers.find((p) => p.dir === pluginDir);
   if (!pluginConfig) {
     throw new Error(`Plugin ${pluginDir} not found`);
   }
 
   const pluginPath = path.join(scrapersPath, pluginDir, pluginConfig.start);
-  let pluginWindow = new BrowserWindow({
+  currentPluginWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -206,16 +269,24 @@ ipcMain.handle("open-plugin", async (event, pluginDir) => {
     },
   });
 
-  pluginWindow.loadFile(pluginPath);
+  currentPluginWindow.loadFile(pluginPath);
+  currentPluginDir = pluginDir; // Set the current plugin directory
 
-  pluginWindow.on("closed", () => {
-    pluginWindow = null;
+  currentPluginWindow.on("closed", () => {
+    currentPluginWindow = null;
+    currentPluginDir = null; // Clear the current plugin directory
   });
 });
 
 // IPC Handler for Plugins
 ipcMain.handle("get-plugins", async () => {
-  return global.scrapers;
+  return {
+    scrapers: global.scrapers,
+    checkers: Object.keys(global.checkers).map((key) => ({
+      name: global.checkers[key].name,
+      description: global.checkers[key].description,
+    })),
+  };
 });
 
 // Listen for notify-main message and refresh the main window
@@ -230,7 +301,11 @@ ipcMain.handle("refresh-data", async () => {
     const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
 
     const updatePromises = data.map(async (project) => {
-      project.isOnline = await isProjectOnline(project.link);
+      const checker = global.checkers[project.checkerName];
+      if (!checker) {
+        throw new Error(`Checker plugin ${project.checkerName} not found`);
+      }
+      project.isOnline = await checker.checkOnlineStatus(project.link);
       return project;
     });
 
