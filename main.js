@@ -1,24 +1,22 @@
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs").promises;
-const {
-  initData,
-  isProjectOnline,
-} = require("./dataInitializer");
+const { initData, isProjectOnline } = require("./dataInitializer");
 
 const dataPath = path.join(__dirname, "data.json");
 const pluginsPath = path.join(__dirname, "plugins");
+const scrapersPath = path.join(pluginsPath, "scrapers");
 
 let mainWindow;
 const devTools = false;
 
 async function loadPlugins() {
   try {
-    const pluginDirs = await fs.readdir(pluginsPath);
-    const plugins = [];
+    const scraperDirs = await fs.readdir(scrapersPath);
+    const scrapers = [];
 
-    for (const dir of pluginDirs) {
-      const pluginIndexPath = path.join(pluginsPath, dir, "index.js");
+    for (const dir of scraperDirs) {
+      const pluginIndexPath = path.join(scrapersPath, dir, "index.js");
       if (
         await fs
           .access(pluginIndexPath)
@@ -26,20 +24,20 @@ async function loadPlugins() {
           .catch(() => false)
       ) {
         const pluginConfig = require(pluginIndexPath);
-        plugins.push({ ...pluginConfig, dir });
+        scrapers.push({ ...pluginConfig, dir });
       }
     }
 
-    global.plugins = plugins;
-    console.log("Plugins successfully loaded.");
-    return plugins;
+    global.scrapers = scrapers;
+    console.log("Scraper plugins successfully loaded.");
+    return scrapers;
   } catch (error) {
     console.error("Error loading plugins:", error);
     return [];
   }
 }
 
-function createWindow() {
+function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 1920,
     height: 1080,
@@ -57,7 +55,7 @@ function createWindow() {
   });
 
   if (devTools) {
-    mainWindow.webContents.openDevTools(); // DevTools beim Start öffnen
+    mainWindow.webContents.openDevTools(); // Open DevTools at startup
   }
 
   Menu.setApplicationMenu(null);
@@ -67,7 +65,7 @@ app
   .whenReady()
   .then(initData)
   .then(loadPlugins)
-  .then(createWindow)
+  .then(createMainWindow)
   .catch((error) =>
     console.error("Error starting server or creating window:", error)
   );
@@ -80,7 +78,7 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    createMainWindow();
   }
 });
 
@@ -158,7 +156,7 @@ ipcMain.handle("update-data", async (event, updatedEntry) => {
   }
 });
 
-// Allgemeiner Plugin-Handler
+// General Plugin Handler
 ipcMain.handle("plugin-add-data", async (event, newEntries) => {
   try {
     const data = JSON.parse(await fs.readFile(dataPath, "utf8"));
@@ -167,7 +165,7 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
     for (const entry of newEntries) {
       const { name, description, link } = entry;
       if (!name || !description || !link) {
-        continue; // Überspringe ungültige Einträge
+        continue; // Skip invalid entries
       }
 
       const newId = ++maxId;
@@ -190,14 +188,14 @@ ipcMain.handle("plugin-add-data", async (event, newEntries) => {
   }
 });
 
-// Öffnet ein Plugin-Fenster
+// Open a Plugin Window
 ipcMain.handle("open-plugin", async (event, pluginDir) => {
-  const pluginConfig = global.plugins.find((p) => p.dir === pluginDir);
+  const pluginConfig = global.scrapers.find((p) => p.dir === pluginDir);
   if (!pluginConfig) {
     throw new Error(`Plugin ${pluginDir} not found`);
   }
 
-  const pluginPath = path.join(pluginsPath, pluginDir, pluginConfig.start);
+  const pluginPath = path.join(scrapersPath, pluginDir, pluginConfig.start);
   let pluginWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -215,12 +213,12 @@ ipcMain.handle("open-plugin", async (event, pluginDir) => {
   });
 });
 
-// IPC Handler für Plugins
+// IPC Handler for Plugins
 ipcMain.handle("get-plugins", async () => {
-  return global.plugins;
+  return global.scrapers;
 });
 
-// Hören Sie auf die notify-main Nachricht und aktualisieren Sie das Hauptfenster
+// Listen for notify-main message and refresh the main window
 ipcMain.on("notify-main", () => {
   if (mainWindow) {
     mainWindow.webContents.send("refresh-data");
